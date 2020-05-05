@@ -1,8 +1,8 @@
 ---
 layout: page
-title: projects
+title: Projects
 permalink: /projects/
-description: A growing collection of your cool projects.
+description: These are some of the cool things I've attempted so far.
 ---
 
 {% for project in site.projects %}
@@ -10,9 +10,9 @@ description: A growing collection of your cool projects.
 {% if project.redirect %}
 <div class="project">
     <div class="thumbnail">
-        <a href="{{ project.redirect }}" target="_blank">
+        <a href="{{ project.redirect }}" target="_blank"> 
         {% if project.img %}
-        <img class="thumbnail" src="{{ project.img | prepend: site.baseurl | prepend: site.url }}"/>
+        <img class="thumbnail" src="{{ project.img | prepend: site.baseurl | prepend: site.url }}" />
         {% else %}
         <div class="thumbnail blankbox"></div>
         {% endif %}    

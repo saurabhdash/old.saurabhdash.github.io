@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Project 2
-description: a project with a background image
-img: /assets/img/2.jpg
+title: Circuit Partitioning using Deep Learning
+description: This project leverages Graph Convolutional Networks to partition a circuit hypergraph.
+img: /assets/img/partiton.png
 ---
 
-Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width.
+This project attempts to solve the problem of circuit partitioning. Due to the combinatorial nature of the problem, it is an NP Hard problem which is usually solved approximately with the help of Heuristics. In contrast to these approaches, we follow the framework [GAP](https://arxiv.org/pdf/1903.00614.pdf/){:target="\_blank"} which is a deep learning based approach to the above problem by using [Graph Convolutional Networks](https://arxiv.org/pdf/1609.02907.pdf){:target="\_blank"}.
 
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 

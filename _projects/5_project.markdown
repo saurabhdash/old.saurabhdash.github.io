@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Project 5
+title: Neuronal Encoding/Decoding and Synaptic Plasticity in Visual Cortex
 description: a project with a background image
 img: /assets/img/1.jpg
 ---
