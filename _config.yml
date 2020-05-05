@@ -39,8 +39,8 @@ google_analytics: UA-155736466-1 # out your google-analytics code
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
-blog_name: Saurabh Dash 
-blog_description: A personal website for Saurabh Dash
+blog_name: AIdeas
+blog_description: This is mostly meant for my future-self as a cool-things-learnt journal but brownie points if it helps anyone else as well.
 
 # Pagination
 paginate: 4
@@ -53,7 +53,7 @@ text:
     older: 'Older'
 
 # Comments
-disqus_shortname: al-folio # put your disqus shortname
+disqus_shortname: sdash # put your disqus shortname
 
 # Optional features
 show_social_icons:  false
@@ -97,7 +97,7 @@ plugins:
 # Jekyll-Scholar
 scholar:
 
-  last_name: Einstein
+  last_name: Dash
 
   style: apa
   locale: en
