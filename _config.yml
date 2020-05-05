@@ -1,17 +1,12 @@
 # -----------------------------------------------------------------------------
 # Site settings
 # -----------------------------------------------------------------------------
-name: Your Name
-email: you@example.com
-description: > # this means to ignore newlines until "url:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
-footer_text: >
-  Powered by <a href="http://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
+name: Saurabh Dash
+email: saurabhdash@gatech.edu
+
 
 url:  # the base hostname & protocol for your site
-baseurl:  # the subpath of your site, e.g. /blog/
+baseurl: # the subpath of your site, e.g. /blog/
 last_updated: # leave blank if you don't want to display last updated
 
 # -----------------------------------------------------------------------------
@@ -25,10 +20,10 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # -----------------------------------------------------------------------------
 # Social integration
 # -----------------------------------------------------------------------------
-github_username: # your GitHub user name
-twitter_username: # your Twitter handle
-linkedin_username: # your LinkedIn user name
-scholar_userid: # your Google Scholar ID
+github_username: saurabhdash # your GitHub user name
+twitter_username: TheyCallMeMr_ # your Twitter handle
+linkedin_username: saurabh-dash-a52860103 # your LinkedIn user name
+scholar_userid: bboszRcAAAAJ # your Google Scholar ID
 orcid_id: # your ORCID ID
 medium_username: # your Medium username
 quora_username: # your Quora username
@@ -37,15 +32,15 @@ research_gate_profile: # your profile on ResearchGate
 blogger_url: # your blogger URL
 
 contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
+  Designed using the al-folio template. Hosted using Github pages.
 
-google_analytics: UA-XXXXXXXXX # out your google-analytics code
+google_analytics: UA-155736466-1 # out your google-analytics code
 
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
-blog_name: al-folio
-blog_description: a simple whitespace theme for academics
+blog_name: Saurabh Dash 
+blog_description: A personal website for Saurabh Dash
 
 # Pagination
 paginate: 4
@@ -112,14 +107,15 @@ scholar:
 
   source: /_bibliography/
   bibliography: papers.bib
-  bibliography_template: bib
-
+  # bibliography_template: bib
+  bibliography_template: "{{ reference | replace_first: 'Dash, S.', '<b>Dash, S.</b>' }}"
   replace_strings: true
   join_strings: true
 
   details_dir: bibliography
   details_layout: bibtex.html
   details_link: Details
+  
 
   query: "@*"
 
@@ -129,3 +125,4 @@ scholar:
 jquery_version: "1.12.4"
 katex_version: "0.9.0"
 anchorjs_version: "3.2.2"
+  
