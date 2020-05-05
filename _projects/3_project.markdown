@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Low Power On-Chip Learner for a Neuromorphic Classifier
-description: Editing
+description: This is to test if the changes are reflected in .html
 img: /assets/img/NLN.png
 # redirect: https://unsplash.com
 ---

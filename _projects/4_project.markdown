@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Kharagpur RoboSoccer Students' Group
-description: Building robots that play soccer autonomously
+description: Building robots that play soccer autonomously.
 img: /assets/img/ssl-robot.jpg
 redirect: https://krssg.in/index.html
 ---

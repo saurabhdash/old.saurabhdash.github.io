@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Low Power Implantable Spike Sorting Scheme based on Neuromorphic Classifier with Supervised Training Engine
-description: 
+description: New description
 img: /assets/img/spikesorting.png
 ---
 
