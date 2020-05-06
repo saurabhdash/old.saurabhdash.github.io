@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Deep Generative Models
-description: Deep generative models are fascinating. This project attemps to study and contrast the various approaches for generative modelling.
+description: Test addition. Deep generative models are fascinating. This project attemps to study and contrast the various approaches for generative modelling.
 img: /assets/img/GAN_celeba_30.png
 ---
 
@@ -12,7 +12,7 @@ To give your project a background in the portfolio page, just add the img tag to
     ---
     layout: page
     title: Project
-    description: a project with a background image.
+    description: a project with a background image. 
     img: /assets/img/12.jpg
     ---
 

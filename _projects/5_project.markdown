@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Neuronal Encoding/Decoding and Synaptic Plasticity in Visual Cortex
-description: a project with a background image
+description: this is changes to this file.
 img: /assets/img/1.jpg
 ---
 
