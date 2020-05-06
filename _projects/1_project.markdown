@@ -1,11 +1,15 @@
 ---
 layout: page
 title: Deep Generative Models
-description: Test addition. Deep generative models are fascinating. This project attemps to study and contrast the various approaches for generative modelling.
+description: Deep generative models are fascinating. This project attemps to study and contrast the various approaches for generative modelling.
 img: /assets/img/GAN_celeba_30.png
 ---
 
 Generative Modelling is the method of learning data distributions in an unsupervised manner which could be used to generate new data-points. Leveraging recent advances in deep learning, generative modelling when carried out on images leads to extremely realistic looking synthetic examples. In this project, we study 3 frameworks that are popularly used for this purpose: Generative Adversarial Networks (GANs) , Variational Auto-encoders (VAEs) and Normalizing Flows (NFs).
+
+
+The codes for Generative Adversarial Networks and its variations can be found [here](https://github.com/saurabhdash/DeepGenerativeModels-GANandWGAN){:target="\_blank"}.
+The report can be found [here]({{ site.baseurl }}{{post.url}}/assets/pdf/Stat_ML_Report.pdf){:target="\_blank"}.
 
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
