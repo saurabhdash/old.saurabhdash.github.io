@@ -38,11 +38,15 @@ The idea behind using a Graph Embedding module is to act as feature extractor th
 
 A single layer of GCN implements the following function:
 
-$$
+<!-- $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace X^{i+1} = \tanh(\hat{A}X^{i}W^{i})
+    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace 
+    X^{i+1} = \tanh(\hat{A}X^{i}W^{i})
 \end{alignedat}
-$$
+$$ -->
+
+$$X^{i+1} = \tanh(\hat{A}X^{i}W^{i})$$
+
 
 Where $$X^i$$ is an $$n \times d$$ matrix that represents the embeddings learnt in the $$i^{th}$$ layer. $$W^i$$ is a learnable parameter that represents how to weight the embeddings in $$X^i$$. $$\hat{A} = D^{-1/2} \tilde{A} D^{-1/2}$$.  $$\tilde{A} = A+ I_n$$ where $$A$$ is the adjacency matrix and $$I_n$$ is the identity matrix. $$D$$ is a diagonal matrix whose diagonal term $$D_i = \sum_{j} \tilde{A}_{ij}$$.
 
@@ -54,7 +58,7 @@ Once the node embeddings are generated for all nodes, all that is needed is to u
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace Y = softmax(W^{T} X)
+    Y = softmax(W^{T} X)
 \end{alignedat}
 $$
 
@@ -67,7 +71,7 @@ The Normalized cut, $$ncut(S_k,\bar{S_k})$$ can be defined as:
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace ncut(S_k,\bar{S_k}) = \sum_{k=1}^{g} \frac{cut(S_k, \bar{S_k})}{vol(S_k , V)}
+ncut(S_k,\bar{S_k}) = \sum_{k=1}^{g} \frac{cut(S_k, \bar{S_k})}{vol(S_k , V)}
 \end{alignedat}
 $$
  
@@ -78,7 +82,7 @@ If, $$Y_{ik}$$ represent the probability that node $$i$$ belongs to partition $$
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \mathbb{E} [cut(S_k,\bar{S_k})] = \sum_{v_i \in S_k , v_j \in \mathcal{N}(v_i)} \sum_{z=1}^{g} Y_{iz} (1 - Y_{jz})
+\mathbb{E} [cut(S_k,\bar{S_k})] = \sum_{v_i \in S_k , v_j \in \mathcal{N}(v_i)} \sum_{z=1}^{g} Y_{iz} (1 - Y_{jz})
 \end{alignedat}
 $$
 
@@ -87,7 +91,7 @@ $$\mathcal{N}(v_i)$$ represents to nodes adjacent to $$v_i$$. This information c
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \mathbb{E} [cut(S_k,\bar{S_k})] = \sum_{reduce-sum} Y_{:,k} (1 - Y_{:,k})^{T} \odot A
+\mathbb{E} [cut(S_k,\bar{S_k})] = \sum_{reduce-sum} Y_{:,k} (1 - Y_{:,k})^{T} \odot A
 \end{alignedat}
 $$
 
@@ -95,13 +99,13 @@ Let $$D$$ be a column vector of size $$n$$ where $$D_i$$ is the degree of node $
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \Gamma = Y^T D
+\Gamma = Y^T D
 \end{alignedat}
 $$
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \Gamma_k = \mathbb{E}[vol(S_k,V)]
+\Gamma_k = \mathbb{E}[vol(S_k,V)]
 \end{alignedat}
 $$
 
@@ -109,7 +113,7 @@ $$\Gamma$$ is a column vector of length $$g$$. Combining the above two equations
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \mathcal{L}_{Ncut} = \mathbb{E} [Ncut(S_k,\bar{S_k})] = \sum_{reduce-sum} (Y/ \Gamma) (1 - Y)^{T} \odot A
+\mathcal{L}_{Ncut} = \mathbb{E} [Ncut(S_k,\bar{S_k})] = \sum_{reduce-sum} (Y/ \Gamma) (1 - Y)^{T} \odot A
 \end{alignedat}
 $$
 
@@ -117,7 +121,7 @@ $$
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \mathcal{L}_{bal} = \sum_{reduce-sum} \| \frac{1}{n} \mathbf{1}^{T} Y - \frac{1}{g} \|_{2}^{2}
+\mathcal{L}_{bal} = \sum_{reduce-sum} \| \frac{1}{n} \mathbf{1}^{T} Y - \frac{1}{g} \|_{2}^{2}
 \end{alignedat}
 $$
 
@@ -125,7 +129,7 @@ Thus, the final loss function that the model tries to minimize is:
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \mathcal{L} = \mathcal{L}_{Ncut} + \beta \mathcal{L}_{bal}
+\mathcal{L} = \mathcal{L}_{Ncut} + \beta \mathcal{L}_{bal}
 \end{alignedat}
 $$
 

@@ -26,7 +26,7 @@ Thus the GAN optimization can be formulated as:
 
 $$
 \begin{alignedat}{2}
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace \min\limits_{G} \: \max\limits_{D} L_{GAN}(G,D) = \mathbb{E}_{x \sim p_r(x)}[\log(D(x))] + \mathbb{E}_{x \sim p_g(x)}[\log(1 - D(x))]
+\min\limits_{G} \: \max\limits_{D} L_{GAN}(G,D) = \mathbb{E}_{x \sim p_r(x)}[\log(D(x))] + \mathbb{E}_{x \sim p_g(x)}[\log(1 - D(x))]
 \end{alignedat}
 $$
 
@@ -113,8 +113,7 @@ It has been observed that the support for the real distribution $$\mathbb{P}_r$$
 Wasserstein distance measures the distance between two probability measures and is a smooth measure. It is defined as:
 
 
-$$
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \;\;\;\;\;\;\;\;\;  
+$$  
     W(\mathbb{P}_{r}, \mathbb{P}_{g}) = \inf_{\gamma \sim \Pi(\mathbb{P}_{r}, \mathbb{P}_{g})} \mathbb{E}_{(x,y) \sim \gamma}[\|x-y\|]
 $$
 
@@ -127,7 +126,6 @@ We sample the joint distribution $$\gamma$$ from this set that minimizes the exp
 In this current from the expression in intractable. \[[2](https://arxiv.org/pdf/1701.07875.pdf){:target="\_blank"}\] used Kantorovich-Rubinstein duality to obtain the equivalent expression:
 
 $$
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \;\;\;\;\;\;\;\;\;
     W(\mathbb{P}_{r}, \mathbb{P}_{g}) = \sup_{\|f\|_{L} \leq K} \mathbb{E}_{p_{r}}[f(x)] - \mathbb{E}_{p_{g}}[f(x)]
 $$
 
@@ -136,9 +134,7 @@ But the above equation requires that the discriminator function $$f$$ be K-Lipsc
 Instead of clipping, \[[Gulrajani et. al.](https://arxiv.org/pdf/1704.00028.pdf){:target="\_blank"}\] showed that the optimal discriminator or critic $$f^{*}$$ has gradient 1 almost everywhere under $$\mathbb{P}_{r}$$ and $$\mathbb{P}_{g}$$. This could be added as an extra penalty term in the WGAN loss function leading to WGAN-GP (gradient penalty).
 
 $$
-    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \;\;\;\;\;\;\;\;\;
     \mathcal{L}_{WGAN-GP} = \mathcal{L}_{WGAN} + \lambda(\| \nabla_{\hat{x}} D_{w}(\hat{x}) \|_{2} - 1)^2
-
 $$
 
 ### Results ###
