@@ -1,36 +1,11 @@
 ---
 layout: page
-title: Low Power On-Chip Learner for a Neuromorphic Classifier
-description: This work develops the various components required for implementing on-chip learning for Neuromorphic Classifiers. 
-img: /assets/img/NLN.png
-# redirect: https://unsplash.com
+title: Neuronal Encoding/Decoding and Synaptic Plasticity in Visual Cortex
+description: this is changes to this file.
+img: /assets/img/1.jpg
 ---
 
-<div class="img_row">
-    <img class="col one left" src="{{ site.baseurl }}/assets/img/NLN.png" alt="" title="example image"/>
-    <img class="col one left" src="{{ site.baseurl }}/assets/img/architecture.png" alt="" title="example image"/>
-    <img class="col one left" src="{{ site.baseurl }}/assets/img/Capture1.PNG" alt="" title="example image"/>
-</div>
-<div class="col three caption">
-    Algorithm. Architecture. Circuits.
-</div>
-<!-- <div class="img_row">
-    <img class="col three left" src="{{ site.baseurl }}/assets/img/5.jpg" alt="" title="example image"/>
-</div> -->
-<!-- <div class="col three caption">
-    This image can also have a caption. It's like magic.
-</div> -->
-
-This work presents a modification to the learning algorithm named Network Rewiring (NRW) for Dendritically Enhanced Readout (DER) \[[1](https://ieeexplore.ieee.org/document/6679699/){:target="\_blank"}\],  the architecture and the various circuits required to implement on-chip learning. We show that with certain modifications, NRW can be implemented on-chip to classify patterns upto 10 classes with  performance comparable to the software implementation. Furthermore, it is also shown that the design is tolerant to process variation.
-
-The codes can be found [here](){:target="\_blank"}.
-
-The report can be found [here]({{ site.baseurl }}{{post.url}}/assets/pdf/OnlineLearning.pdf){:target="\_blank"}.
-
-
-
-<!--
-Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width..
+Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width.
 
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 
@@ -77,4 +52,4 @@ The code is simple. Just add a col class to your image, and another class specif
 <div class="img_row">
     <img class="col two left" src="/img/6.jpg"/>
     <img class="col one left" src="/img/11.jpg"/>
-</div> -->
+</div>
