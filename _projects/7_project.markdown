@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Neuronal Encoding/Decoding and Synaptic Plasticity in Visual Cortex
-description: Academic projects in Computational Neuroscience
+description: Academic projects in Computational Neuroscience.
 img: /assets/img/PSTH_tau_ir1000.jpg
 ---
 

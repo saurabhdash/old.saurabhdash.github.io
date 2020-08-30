@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Physics-Incorporated Convolutional Recurrent Neural Networks for Source Identification and Forecasting of Dynamical Systems
-description: Efficient Dynamical System prediction with physics prior.
+description: Efficient learning in Dynamical Systems with physics prior.
 img: /assets/img/phicnet.png
 ---
 
