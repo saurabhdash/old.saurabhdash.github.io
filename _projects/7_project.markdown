@@ -1,10 +1,21 @@
 ---
 layout: page
 title: Neuronal Encoding/Decoding and Synaptic Plasticity in Visual Cortex
-description: this is changes to this file.
-img: /assets/img/1.jpg
+description: Academic projects in Computational Neuroscience
+img: /assets/img/PSTH_tau_ir1000.jpg
 ---
 
+Used STA and PSTH to estimate parameters from stimulus input and response spikes. Applied Information theory based distance metrics like Van Rossum and Victor-Purpura to quantify discrimination between stimuli.
+
+
+Modelled the spiking behaviour of subplate and L4 neurons, with thalamic inputs from both eyes.Used STDP and Hebbian plasticity to simulate learning and ocular dominance in early stages of development.
+
+The report can be found [here](https://github.com/saurabhdash/CompNeuroProject4/blob/master/Project%204.pdf){:target="\_blank"}.
+
+The codes can be found [here](https://github.com/saurabhdash/CompNeuroProject4){:target="\_blank"}.
+
+
+<!-- 
 Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width.
 
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
@@ -52,4 +63,4 @@ The code is simple. Just add a col class to your image, and another class specif
 <div class="img_row">
     <img class="col two left" src="/img/6.jpg"/>
     <img class="col one left" src="/img/11.jpg"/>
-</div>
+</div> -->

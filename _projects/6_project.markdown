@@ -1,29 +1,36 @@
 ---
 layout: page
-title: Low Power Implantable Spike Sorting Scheme based on Neuromorphic Classifier with Supervised Training Engine
-description: Developing implantable neural spike sorting circuits.
-img: /assets/img/spikesorting.png
+title: Low Power On-Chip Learner for a Neuromorphic Classifier
+description: This work develops the various components required for implementing on-chip learning for Neuromorphic Classifiers. 
+img: /assets/img/NLN.png
+# redirect: https://unsplash.com
 ---
-An ultra-low power neural spike sorting technique for implantable, multi-channel neural implant is proposed. It involves a spiking neural network (SNN) with binary weights as an energy and area efficient classifier, along with a suitable frontend for spike encoding of the recorded neuro-potential. The proposed scheme employs   two step training to implement supervised learning for the classifier, in order to achieve appreciable classification accuracy, along with low power dissipation. During the 1st phase a k-mean clustering module is trained with the real-time input data. In the 2nd phase, the trained means are used to perform supervised learning  for the SNN classifier. After the training process, the low power SNN  module is used for the classification task. In the proposed scheme, the K-means training module can be shared among large number of channels for training the dedicated SNN modules, which are relatively compact and can operate with ~4x lower power (as compared to the K-means sorter), while preserving the classification accuracy. Algorithm and architecture level optimizations for the proposed system are presented.
-
-The report can be found [here](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7987530){:target="\_blank"}.
-
-<!-- <div style="text-align: center"><img src="/assets/img/ss.png" width="700" height="auto" /></div>
-<div class="col three caption">
-    Architecture
-</div> -->
 
 <div class="img_row">
-    <img class="col one left" src="{{ site.baseurl }}/assets/img/ss.png" alt="" title="example image"/>
-    <img class="col one left" src="{{ site.baseurl }}/assets/img/spikesorting.png" alt="" title="example image"/>
-    <img class="col one left" src="{{ site.baseurl }}/assets/img/ss2.png" alt="" title="example image"/>
-    <!-- <img class="col one left" src="{{ site.baseurl }}/assets/img/3.jpg" alt="" title="example image"/> -->
+    <img class="col one left" src="{{ site.baseurl }}/assets/img/NLN.png" alt="" title="example image"/>
+    <img class="col one left" src="{{ site.baseurl }}/assets/img/architecture.png" alt="" title="example image"/>
+    <img class="col one left" src="{{ site.baseurl }}/assets/img/Capture1.PNG" alt="" title="example image"/>
 </div>
 <div class="col three caption">
-    Algorithm. Architecture. CCO to SNN encoding.
+    Algorithm. Architecture. Circuits.
 </div>
+<!-- <div class="img_row">
+    <img class="col three left" src="{{ site.baseurl }}/assets/img/5.jpg" alt="" title="example image"/>
+</div> -->
+<!-- <div class="col three caption">
+    This image can also have a caption. It's like magic.
+</div> -->
 
-<!-- Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width.
+This work presents a modification to the learning algorithm named Network Rewiring (NRW) for Dendritically Enhanced Readout (DER) \[[1](https://ieeexplore.ieee.org/document/6679699/){:target="\_blank"}\],  the architecture and the various circuits required to implement on-chip learning. We show that with certain modifications, NRW can be implemented on-chip to classify patterns upto 10 classes with  performance comparable to the software implementation. Furthermore, it is also shown that the design is tolerant to process variation.
+
+The codes can be found [here](){:target="\_blank"}.
+
+The report can be found [here]({{ site.baseurl }}{{post.url}}/assets/pdf/OnlineLearning.pdf){:target="\_blank"}.
+
+
+
+<!--
+Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width..
 
 To give your project a background in the portfolio page, just add the img tag to the front matter like so:
 

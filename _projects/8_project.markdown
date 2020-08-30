@@ -1,8 +1,9 @@
 ---
 layout: page
-title: Neuronal Encoding/Decoding and Synaptic Plasticity in Visual Cortex
-description: this is changes to this file.
-img: /assets/img/1.jpg
+title: Kharagpur RoboSoccer Students' Group
+description: Building robots that play soccer autonomously.
+img: /assets/img/ssl-robot.jpg
+redirect: https://krssg.in/index.html
 ---
 
 Every project has a beautiful feature shocase page. It's easy to include images, in a flexible 3-column grid format. Make your photos 1/3, 2/3, or full width.
