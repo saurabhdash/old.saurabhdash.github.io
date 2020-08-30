@@ -7,6 +7,7 @@ img: /assets/img/phicnet.png
 
 Spatio-temporal dynamics of physical processes are generally modeled using partial differential equations (PDEs). Though the core dynamics follows some principles of physics, real-world physical processes are often driven by unknown external sources. In such cases, developing a purely analytical model becomes very difficult and data-driven modeling can be of assistance. In this paper, we present a hybrid framework combining physics-based numerical models with deep learning for source identification and forecasting of spatio-temporal dynamical systems with unobservable time-varying external sources. We formulate our model PhICNet as a convolutional recurrent neural network (RNN) which is end-to-end trainable for spatio-temporal evolution prediction of dynamical systems and learns the source behavior as an internal state of the RNN. Experimental results show that the proposed model can forecast the dynamics for a relatively long time and identify the sources as well. 
 
+The report can be found [here](https://arxiv.org/pdf/2004.06243.pdf){:target="\_blank"}.
 
 <div style="text-align: center"><img src="/assets/img/phicnet-res.png" width="700" height="auto" /></div>
 <div class="col three caption">
