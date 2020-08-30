@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Hessian-Driven Unequal Protection of DNN Parameters for Robust Inference
-description: Algorithmic approach to designing robust NVM based PIM architectures
+description: Algorithmic approach to designing robust NVM based PIM architectures.
 img: /assets/img/overview.png
 ---
 
