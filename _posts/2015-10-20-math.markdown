@@ -1,15 +1,162 @@
 ---
 layout: post
-title: a post with math
-date: 2015-10-20 11:12:00-0400
-description: an example of a blog post with some math
+title: Kantorovich-Rubinstein Duality
+date: 2020-09-14 11:12:00-0400
+description: A derivation of the dual form of the optimal transport problem used in the WGAN paper.
 ---
-This theme supports rendering beautiful math in inline and display modes using [KaTeX](https://khan.github.io/KaTeX/) engine. You just need to surround your math expression with `$$`, like `$$ E = mc^2 $$`. If you leave it inside a paragraph, it will produce an inline expression, just like $$ E = mc^2 $$.
+Since the very first time I read the WGAN paper, I always wondered how the intractible primal form of the optimal transport problem was converted to the practical dual form used widely in machine learning. I recently happend to be across the elegant proof in Marco Cuturi's talk and I was awestruck. Here I try to breakdown and explain the proof.
 
-To use display mode, again surround your expression with `$$` and place it as a separate paragraph. Here is an example:
+## Kantorovich Problem ##
+Given two probability measures $$\mu, \nu \in \mathcal{P}(\Omega)$$; a cost function $$c(x,y)$$ on $$\Omega \times \Omega$$, the Kantorovich optimal transport problem is:
 
 $$
-\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+    \inf_{P \in \Pi(\mu, \nu)} \iint c(x,y) P(dx, dy)
 $$
 
-Note that [KaTeX](https://khan.github.io/KaTeX/) is work in progress, so it does not support the full range of math expressions as, say, [MathJax](https://www.mathjax.org/). Yet, it is [blazing fast](http://www.intmath.com/cg5/katex-mathjax-comparison.php).
+$$
+\begin{aligned}
+    \Pi(\mu, \nu) \triangleq \{P \in \mathcal{P}(\Omega \times \Omega) | \forall A, B \subset \Omega, \\
+     P(A \times \Omega) = \mu(A), P(\Omega \times B) = \nu(B) \}
+\end{aligned}
+$$
+
+This tells us that the optimal cost of transport is an infimum over all possible couplings that have marginals $$\mu$$ and $$\nu$$ respectively - the calculation of which is intractible. 
+
+So, how do we proceed? 
+
+## Black Magic ##
+
+Consider 2 functions (called potentials) $$\varphi$$ and $$\psi$$ on $$\Omega$$ and define: $$(\varphi \oplus \psi)(x,y) \triangleq \varphi(x) + \psi(y)$$
+
+$$
+\begin{aligned}
+\iint (\varphi \oplus \psi) dP &= \int_{x} \varphi(x) \int_{y} dP(x,y) + \int_{y} \psi(y) \int_{x} dP(x,y) \\
+&= \int \varphi(x) dP_{X} + \int \psi(y) dP_{Y}
+\end{aligned}
+$$
+
+As $$P(x,y)$$ is a probability measure, the integral with respect to $$x$$ or $$y$$ is just the marginal distribution.
+
+Let $$\varphi, \psi : \Omega \to \mathbb{R}$$, and $$P \in \mathcal{P}_{+}(\Omega^{2})$$. (We do not assume that $$P$$ is in the right set of couplings.)
+
+$$
+\begin{aligned}
+    \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP = \int \varphi \: d(\mu - P_{x}) + \int \psi \: d(\nu - P_{Y})
+\end{aligned}
+$$
+
+The above integral is 0 if $$P \in \Pi(\mu, \nu)$$.
+
+define $$l_{\pi}(P)$$ as:
+
+$$
+\begin{aligned}
+l_{\pi}(P) &= \sup_{\varphi, \psi} \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP \\
+l_{\pi}(P) &= \begin{cases}
+   0 &\text{if } P \in \Pi(\mu, \nu) \\
+   \infty &\text{otherwise}
+\end{cases}
+\end{aligned}
+$$
+
+Now, for a neat little trick: we can add this indicator function to the original problem without changing the infimum. Adding this penalty allows us to incorporate couplings beyond the ones in $$\Pi(\mu, \nu)$$, relaxing the constraint, without changing the solution of the original problem.
+
+
+$$
+\inf_{P \in \Pi(\mu, \nu)} \iint c \: dP = \inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint c \: dP + l_{\pi}(P)
+$$
+
+expanding,
+
+$$
+\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint c \: dP + \sup_{\varphi, \psi} \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP
+$$
+
+We can take $$\varphi, \psi$$ to the front of the equation as the first term is independent of them.
+
+$$
+\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \sup_{\varphi, \psi} \iint c \: dP + \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP
+$$
+
+simplifying,
+
+$$
+\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \sup_{\varphi, \psi} \iint (c - \varphi \oplus \psi)\: dP + \int \varphi d\mu + \int \psi d\nu
+$$
+
+Swapping the infimum and the supremum,
+
+$$
+\sup_{\varphi, \psi} \inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint (c - \varphi \oplus \psi)\: dP + \int \varphi d\mu + \int \psi d\nu
+$$
+
+Now, if $$c < \varphi \oplus \psi$$ even at a single point, we can concentrate the mass of P at that point, thus dropping the infimum to $$-\infty$$.
+
+$$
+\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint (c - \varphi \oplus \psi)\: dP = \begin{cases}
+   0 &\text{if } (c - \varphi \oplus \psi) \geq 0 \\
+   -\infty &\text{otherwise}
+\end{cases}
+$$
+
+Thus, this gives us the dual form:
+
+$$
+\sup_{\varphi + \psi \leq c} \: \int \varphi \: d\mu + \int \psi \: d\nu
+$$
+
+Almost there.....
+
+### Advantages of the Dual Form ###
+Easier to deal with from a computational perspective as it is easier to store two functions rather than entire coupling.
+
+If we are interested in the measures, it is easier to work with the dual because thee cost remains the same. we can play with the objective rather than the constraint.
+
+## 1- Wasserstein Distance ##
+
+If the cost $$c(x,y) = D(x,y)$$ where $$D(x,y)$$ is any metric, we get the 1-Wasserstein distance in $$\mathcal{P}(\Omega)$$
+
+$$
+W_{1}(\mu, \nu) \triangleq \inf_{P \in \Pi(\mu, \nu)} \iint D(x,y) \: P(dx, dy)
+$$
+
+### Can we do better? ###
+
+Do we have to deal with two different functions, $$\varphi$$ and $$\psi$$, can we do away with one of them?
+
+Imagine, we choose a $$\varphi$$, what is the best $$\psi$$?
+
+We want a $$\psi$$ such that $$\int \psi \: d\nu$$ is large but we have to follow the constraint $$\varphi + \psi \leq D(x,y)$$.
+
+$$\begin{aligned}
+\psi(y) &\leq D(x,y) - \varphi(x) \;\;\; \forall x \\
+\psi(y) &\leq \inf_{x} D(x,y) - \varphi(x)
+\end{aligned}
+$$
+
+This is the best possible $$\psi(x)$$.
+
+define,
+
+$$
+    \bar{\varphi}(y) \triangleq \inf_{x} D(x,y) - \varphi(x)
+$$
+
+Then, we get the semi-dual:
+
+$$
+W_{1}(\mu, \nu) = \sup_{\varphi} \int \varphi \: d\mu + \int \bar{\varphi} \: d\nu
+$$
+
+Instead of searching over all possilbe $$\varphi$$, one can search over all possible $$\varphi$$ such that $$\varphi$$ is D-concave. (This can be shown to be equivalent by repeatedly appling the c-transform). For 1-Wasserstein distance, $$\varphi$$ is D-concave $$\iff \bar{\varphi} = -\varphi$$, $$\varphi$$ is 1-Lipschitz. 
+
+Finally leading us to the famous form used in machine learning:
+
+$$
+W_{1}(\mu, \nu) = \sup_{\varphi: \; 1-\text{Lipschitz}} \: \int \varphi \: d\mu - \int \varphi \: d\nu
+$$
+
+WGAN finds a function $$\varphi$$ that maximizes the above integral with respect to the real and generated probability metrics.
+
+## References ##
+[1] Marco Cuturi: \[[Optimal Transport I, MLSS 2020.](https://www.youtube.com/watch?v=jgrkhZ8ovVc&ab_channel=virtualmlss2020){:target="\_blank"}\]
