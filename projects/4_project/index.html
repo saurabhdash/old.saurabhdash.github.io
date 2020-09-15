@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Saurabh Dash | Circuit Partitioning using Deep Learning</title>
+  <meta name="description" content="A beautiful Jekyll theme for academics">
+
+  
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/projects/4_project/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    
+    <a class="site-title" href="/">
+        
+        <strong>Saurabh</strong> Dash
+    </a>
+    
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        <!-- About -->
+        <a class="page-link" href="/">About</a>
+
+        <!-- Blog -->
+        <a class="page-link" href="/blog/">Blog</a>
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+            <a class="page-link" href="/projects/">Projects</a>
+          
+        
+          
+            <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+        
+
+        <!-- CV link -->
+        <a class="page-link" href="/assets/pdf/Curriculum_Vitae___Saurabh_Dash.pdf">CV</a>
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Circuit Partitioning using Deep Learning</h1>
+    <h5 class="post-description">This project leverages Graph Convolutional Networks to partition a circuit hypergraph.</h5>
+  </header>
+
+  <article class="post-content Circuit Partitioning using Deep Learning clearfix">
+    <p>This project attempts to solve the problem of circuit partitioning. Due to the combinatorial nature of the problem, it is an NP Hard problem which is usually solved approximately with the help of Heuristics. In contrast to these approaches, we follow the framework <a href="https://arxiv.org/pdf/1903.00614.pdf/" target="\_blank">GAP</a> which is a deep learning based approach to the above problem by using <a href="https://arxiv.org/pdf/1609.02907.pdf" target="\_blank">Graph Convolutional Networks</a>.</p>
+
+<p>The Code for this implementation can be found <a href="https://github.com/saurabhdash/GCN_Partitioning/tree/PDAproject" target="\_blank">here</a>.</p>
+
+<h3 id="problem-formulation">Problem Formulation</h3>
+<p>Circuits can be represented as hypergraphs, where the hyperedges connect the various nodes in the circuits. The advantage of such a representation is that unlike their graph counterparts a single hyperedge can connect multiple (more than 2) nodes which makes it a powerful tool to represent wires with multiple fan outs. 
+In such a scenario, the partitioning objective is to divide the circuit into g (greater than or equal to 2) equal parts such that the hyperedge-cut is minimized.</p>
+
+<p>Due to the availability of powerful graph operations, we convert the hypergraph to a graph and introduce a proxy objective – minimize the edge-cut in the converted graph. We employ a k clique-based conversion to convert a hyperedge that connects multiple nodes to multiple edges whose weights are given by:
+<script type="math/tex">w(edge)=   \frac{1}{(k-1)}</script>
+Where k is the number of nodes in a hyperedge.</p>
+
+<p>This conversion gives us an equivalent adjacency matrix that is used by our algorithm to assign nodes to partitions. Minimizing the edge-cut for this equivalent graph, strongly corresponds to reduction in hyperedge cuts.</p>
+
+<h3 id="deep-learning-model">Deep Learning Model</h3>
+
+<p>The deep learning model can be divided into 2 components:</p>
+
+<p>•	Graph Embedding Module</p>
+
+<p>•	Graph Partitioning Module</p>
+
+<div style="text-align: center"><img src="/assets/img/GAP.png" width="700" height="auto" /></div>
+<div class="col three caption">
+Model Architecture
+</div>
+
+<h4 id="graph-embedding-module">Graph Embedding Module</h4>
+<p>The idea behind using a Graph Embedding module is to act as feature extractor that could be used to decide which partition to assign the node to. These embeddings would need to be both a function of node features and the local geometry of the graph. This is where <a href="https://arxiv.org/pdf/1609.02907.pdf" target="\_blank">Graph Convolutional Networks</a> (GCN) are used to learn the graph representations.</p>
+
+<p>A single layer of GCN implements the following function:</p>
+
+<!-- $$
+\begin{alignedat}{2}
+    \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \enspace 
+    X^{i+1} = \tanh(\hat{A}X^{i}W^{i})
+\end{alignedat}
+$$ -->
+
+<script type="math/tex; mode=display">X^{i+1} = \tanh(\hat{A}X^{i}W^{i})</script>
+
+<p>Where <script type="math/tex">X^i</script> is an <script type="math/tex">n \times d</script> matrix that represents the embeddings learnt in the <script type="math/tex">i^{th}</script> layer. <script type="math/tex">W^i</script> is a learnable parameter that represents how to weight the embeddings in <script type="math/tex">X^i</script>. <script type="math/tex">\hat{A} = D^{-1/2} \tilde{A} D^{-1/2}</script>.  <script type="math/tex">\tilde{A} = A+ I_n</script> where <script type="math/tex">A</script> is the adjacency matrix and <script type="math/tex">I_n</script> is the identity matrix. <script type="math/tex">D</script> is a diagonal matrix whose diagonal term <script type="math/tex">D_i = \sum_{j} \tilde{A}_{ij}</script>.</p>
+
+<p>(An intuition to how the above propagation rule works can be found in <a href="https://tkipf.github.io/graph-convolutional-networks/" target="\_blank">this</a> amazing post by Thomas Kipf.)</p>
+
+<h4 id="graph-partitioning-module">Graph Partitioning Module</h4>
+<p>Once the node embeddings are generated for all nodes, all that is needed is to use these embeddings/ features to predict which partition a particular node belongs to. This can be done using a simple fully-connected neural network which take the embeddings as inputs and outputs the partition probabilities <script type="math/tex">Y</script> - probability of a node belonging to a partition. This is implemented using the function:</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+    Y = softmax(W^{T} X)
+\end{alignedat}</script>
+
+<h4 id="loss-function">Loss Function</h4>
+<p>We relax the graph partitioning problem which is combinatorial in nature and make it continuous and differentiable by defining an appropriate loss function that captures edge-cut objective.</p>
+
+<p>Let the converted graph be represented as <script type="math/tex">G(V,E)</script> with nodes <script type="math/tex">V= \{v_i \}</script> and edges <script type="math/tex">E = \{e(v_i,v_j) \mid v_i \in V, v_j \in V \}</script>. Let the disjoint partitions of the graph be <script type="math/tex">S_1,S_2, \dots S_g</script>.</p>
+
+<p>The Normalized cut, <script type="math/tex">ncut(S_k,\bar{S_k})</script> can be defined as:</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+ncut(S_k,\bar{S_k}) = \sum_{k=1}^{g} \frac{cut(S_k, \bar{S_k})}{vol(S_k , V)}
+\end{alignedat}</script>
+
+<p>Where, <script type="math/tex">cut(S_k, \bar{S_k})= \sum_{v_i \in S_k, v_j \in \bar{S_k}} e(v_i,v_j)</script> . This is the total weight of edges that are going out of a partition.
+and <script type="math/tex">vol(S_k, V) = \sum_{v_i \in S_k, v_j \in V} e(v_i, v_j)</script>. This is the total degree of nodes in <script type="math/tex">S_k</script>.</p>
+
+<p>If, <script type="math/tex">Y_{ik}</script> represent the probability that node <script type="math/tex">i</script> belongs to partition <script type="math/tex">k</script>, then the expected value of the cut can be represented as:</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\mathbb{E} [cut(S_k,\bar{S_k})] = \sum_{v_i \in S_k , v_j \in \mathcal{N}(v_i)} \sum_{z=1}^{g} Y_{iz} (1 - Y_{jz})
+\end{alignedat}</script>
+
+<p><script type="math/tex">\mathcal{N}(v_i)</script> represents to nodes adjacent to <script type="math/tex">v_i</script>. This information can be retrieved by using a Hadamard product with the adjacency matrix <script type="math/tex">A</script>. Thus, the above equation can be simplified as:</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\mathbb{E} [cut(S_k,\bar{S_k})] = \sum_{reduce-sum} Y_{:,k} (1 - Y_{:,k})^{T} \odot A
+\end{alignedat}</script>
+
+<p>Let <script type="math/tex">D</script> be a column vector of size <script type="math/tex">n</script> where <script type="math/tex">D_i</script> is the degree of node <script type="math/tex">i</script>. Then,</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\Gamma = Y^T D
+\end{alignedat}</script>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\Gamma_k = \mathbb{E}[vol(S_k,V)]
+\end{alignedat}</script>
+
+<p><script type="math/tex">\Gamma</script> is a column vector of length <script type="math/tex">g</script>. Combining the above two equations,</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\mathcal{L}_{Ncut} = \mathbb{E} [Ncut(S_k,\bar{S_k})] = \sum_{reduce-sum} (Y/ \Gamma) (1 - Y)^{T} \odot A
+\end{alignedat}</script>
+
+<p>/ represents element-wise division. To further enforce balanced partition, we enforce an additional balance penalty term defined as:</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\mathcal{L}_{bal} = \sum_{reduce-sum} \| \frac{1}{n} \mathbf{1}^{T} Y - \frac{1}{g} \|_{2}^{2}
+\end{alignedat}</script>
+
+<p>Thus, the final loss function that the model tries to minimize is:</p>
+
+<script type="math/tex; mode=display">\begin{alignedat}{2}
+\mathcal{L} = \mathcal{L}_{Ncut} + \beta \mathcal{L}_{bal}
+\end{alignedat}</script>
+
+<p>Where <script type="math/tex">\beta</script> allows us to control the tradeoff between balance and edge-cut minimization.</p>
+
+<h4 id="implementation-and-issues">Implementation and Issues</h4>
+<p>The entire framework was implemented in python using the pytorch deep learning framework. We ran the model on an NVIDIA GTX1080ti GPU. The model that we implemented had the following specifications:</p>
+
+<p><strong><em>Graph Embedding Module</em></strong> : 2 Layer GCN that takes in 1024 length feature vector per node.</p>
+
+<p>Layer1: 1024 -&gt; 256</p>
+
+<p>Layer2: 256 -&gt; 16</p>
+
+<p>The first layer converts 1024 features per node to 256 which is then converted to 16 by the next layer.</p>
+
+<p><strong><em>Graph Partitioning Module</em></strong> : 1 Layer fully-connected neural network, that takes in 16 features per node and outputs the probability of the node being in one of the <script type="math/tex">g</script> partitions.</p>
+
+<p>The value of <script type="math/tex">\beta</script> was set to be 1 unless otherwise specified.</p>
+
+<p>For large circuits, the adjacency matrices are massive which requires them to be implemented in sparse matrix format. This proves to be a considerable challenge as the deep learning framework – pytorch which is used to implement the algorithm does not support automatic differentiation of sparse matrices. The loss function had to be implemented from scratch by deriving the derivatives and manually defining the backwards() method in pytorch. Although this overcame the memory bottleneck, this comes at a substantial hit to the speed of the implementation as the reduce-sum operation must be done by looping over non-zero A values. An attempt was made to parallelize this using the numba library but could not be implemented due to the lack of time. This could be an interesting avenue for future work. 
+As the model was made deeper and wider by adding more layers and increasing the size of the embeddings, the model simply attributed all the nodes to a single partition to reduce the cut-size to 0. Increasing <script type="math/tex">\beta</script> also had no affect as the model set all values of <script type="math/tex">Y</script> to 0.5 to satisfy this constraint as well. 
+As the nodes are featureless, initial node embeddings were generated using from a Normal distribution. This makes the model susceptible to the random seed and sometimes requires the training to be done multiple times to get a good result.</p>
+
+<h4 id="results">Results</h4>
+
+<p><br /></p>
+<div style="text-align: center"><img src="/assets/img/traincut.png" width="700" height="auto" /></div>
+<div class="col three caption">
+    Progression of HyperEdge Cut as the training progresses
+</div>
+<p><br />
+<br /></p>
+
+<p>The table below shows the results for Circuit bi-partitioning. Edge weight cut refers to the ratio of the sum of weights of intersected graph edges by total weight of all graph edges.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Circuit</th>
+      <th>Nodes</th>
+      <th>Hyper Edges</th>
+      <th>Partition 1</th>
+      <th>Partition 2</th>
+      <th># Hyper-edges Cut</th>
+      <th>% Hyper-edges Cut</th>
+      <th>Edge weight Cut</th>
+      <th>Imbalance</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fract</td>
+      <td>149</td>
+      <td>147</td>
+      <td>75</td>
+      <td>74</td>
+      <td>11</td>
+      <td>7.4%</td>
+      <td>9.3%</td>
+      <td>0.366%</td>
+      <td>1.52s</td>
+    </tr>
+    <tr>
+      <td>Industry2</td>
+      <td>12637</td>
+      <td>13419</td>
+      <td>6651</td>
+      <td>5986</td>
+      <td>1773</td>
+      <td>13.2%</td>
+      <td>9.93%</td>
+      <td>2.63%</td>
+      <td>85.3s</td>
+    </tr>
+    <tr>
+      <td>Industry3</td>
+      <td>15406</td>
+      <td>21923</td>
+      <td>8329</td>
+      <td>7077</td>
+      <td>3744</td>
+      <td>17.2%</td>
+      <td>13.37%</td>
+      <td>4.06%</td>
+      <td>131s</td>
+    </tr>
+    <tr>
+      <td>P2</td>
+      <td>3014</td>
+      <td>3029</td>
+      <td>1582</td>
+      <td>1432</td>
+      <td>413</td>
+      <td>13.6%</td>
+      <td>8.65%</td>
+      <td>2.48%</td>
+      <td>18.4s</td>
+    </tr>
+    <tr>
+      <td>StructP</td>
+      <td>1952</td>
+      <td>1920</td>
+      <td>983</td>
+      <td>969</td>
+      <td>223</td>
+      <td>11.6%</td>
+      <td>11.71%</td>
+      <td>0.359%</td>
+      <td>11.6s</td>
+    </tr>
+    <tr>
+      <td>IBM01</td>
+      <td>12752</td>
+      <td>14111</td>
+      <td>6107</td>
+      <td>6645</td>
+      <td>2253</td>
+      <td>15.9%</td>
+      <td>11.78%</td>
+      <td>2.1%</td>
+      <td>84.8s</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 
+To give your project a background in the portfolio page, just add the img tag to the front matter like so:
+
+    ---
+    layout: page
+    title: Project
+    description: a project with a background image
+    img: /assets/img/12.jpg
+    ---
+
+
+<div class="img_row">
+    <img class="col one left" src="/assets/img/1.jpg" alt="" title="example image"/>
+    <img class="col one left" src="/assets/img/2.jpg" alt="" title="example image"/>
+    <img class="col one left" src="/assets/img/3.jpg" alt="" title="example image"/>
+</div>
+<div class="col three caption">
+    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
+</div>
+<div class="img_row">
+    <img class="col three left" src="/assets/img/5.jpg" alt="" title="example image"/>
+</div>
+<div class="col three caption">
+    This image can also have a caption. It's like magic.
+</div>
+
+You can also put regular text between your rows of images. Say you wanted to write a little bit about your project before you posted the rest of the images. You describe how you toiled, sweated, *bled* for your project, and then.... you reveal it's glory in the next row of images.
+
+
+<div class="img_row">
+    <img class="col two left" src="/assets/img/6.jpg" alt="" title="example image"/>
+    <img class="col one left" src="/assets/img/11.jpg" alt="" title="example image"/>
+</div>
+<div class="col three caption">
+    You can also have artistically styled 2/3 + 1/3 images, like these.
+</div>
+
+
+<br/><br/>
+
+
+The code is simple. Just add a col class to your image, and another class specifying the width: one, two, or three columns wide. Here's the code for the last row of images above:
+
+<div class="img_row">
+    <img class="col two left" src="/img/6.jpg"/>
+    <img class="col one left" src="/img/11.jpg"/>
+</div> -->
+
+  </article>
+
+  
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+    <!-- To add footer, uncomment this and make changes in the _config file for the content.
+<footer>
+Read more: https://html.com/tags/comment-tag/#ixzz6AO49fXqK
+  <div class="wrapper">
+    &copy; Copyright 2020 Saurabh Dash.
+    
+    
+  </div>
+
+</footer>
+-->
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-155736466-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+
+</html>

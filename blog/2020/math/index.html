@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Saurabh Dash | Kantorovich-Rubinstein Duality</title>
+  <meta name="description" content="A beautiful Jekyll theme for academics">
+
+  
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/blog/2020/math/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    
+    <a class="site-title" href="/">
+        
+        <strong>Saurabh</strong> Dash
+    </a>
+    
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        <!-- About -->
+        <a class="page-link" href="/">About</a>
+
+        <!-- Blog -->
+        <a class="page-link" href="/blog/">Blog</a>
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+            <a class="page-link" href="/projects/">Projects</a>
+          
+        
+          
+            <a class="page-link" href="/publications/">Publications</a>
+          
+        
+          
+        
+
+        <!-- CV link -->
+        <a class="page-link" href="/assets/pdf/Curriculum_Vitae___Saurabh_Dash.pdf">CV</a>
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post" width="200">
+
+  <header class="post-header">
+    <h1 class="post-title">Kantorovich-Rubinstein Duality</h1>
+    <p class="post-meta">September 14, 2020</p>
+  </header>
+
+  <article class="post-content">
+    <p>Since the very first time I read the WGAN paper, I always wondered how the intractible primal form of the optimal transport problem was converted to the practical dual form used widely in machine learning. I recently happend to be across the elegant proof in Marco Cuturi’s talk and I was awestruck. Here I try to breakdown and explain the proof.</p>
+
+<h2 id="kantorovich-problem">Kantorovich Problem</h2>
+<p>Given two probability measures <script type="math/tex">\mu, \nu \in \mathcal{P}(\Omega)</script>; a cost function <script type="math/tex">c(x,y)</script> on <script type="math/tex">\Omega \times \Omega</script>, the Kantorovich optimal transport problem is:</p>
+
+<script type="math/tex; mode=display">\inf_{P \in \Pi(\mu, \nu)} \iint c(x,y) P(dx, dy)</script>
+
+<script type="math/tex; mode=display">\begin{aligned}
+    \Pi(\mu, \nu) \triangleq \{P \in \mathcal{P}(\Omega \times \Omega) | \forall A, B \subset \Omega, \\
+     P(A \times \Omega) = \mu(A), P(\Omega \times B) = \nu(B) \}
+\end{aligned}</script>
+
+<p>This tells us that the optimal cost of transport is an infimum over all possible couplings that have marginals <script type="math/tex">\mu</script> and <script type="math/tex">\nu</script> respectively - the calculation of which is intractible.</p>
+
+<p>So, how do we proceed?</p>
+
+<h2 id="black-magic">Black Magic</h2>
+
+<p>Consider 2 functions (called potentials) <script type="math/tex">\varphi</script> and <script type="math/tex">\psi</script> on <script type="math/tex">\Omega</script> and define: <script type="math/tex">(\varphi \oplus \psi)(x,y) \triangleq \varphi(x) + \psi(y)</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{aligned}
+\iint (\varphi \oplus \psi) dP &= \int_{x} \varphi(x) \int_{y} dP(x,y) + \int_{y} \psi(y) \int_{x} dP(x,y) \\
+&= \int \varphi(x) dP_{X} + \int \psi(y) dP_{Y}
+\end{aligned} %]]></script>
+
+<p>As <script type="math/tex">P(x,y)</script> is a probability measure, the integral with respect to <script type="math/tex">x</script> or <script type="math/tex">y</script> is just the marginal distribution.</p>
+
+<p>Let <script type="math/tex">\varphi, \psi : \Omega \to \mathbb{R}</script>, and <script type="math/tex">P \in \mathcal{P}_{+}(\Omega^{2})</script>. (We do not assume that <script type="math/tex">P</script> is in the right set of couplings.)</p>
+
+<script type="math/tex; mode=display">\begin{aligned}
+    \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP = \int \varphi \: d(\mu - P_{x}) + \int \psi \: d(\nu - P_{Y})
+\end{aligned}</script>
+
+<p>The above integral is 0 if <script type="math/tex">P \in \Pi(\mu, \nu)</script>.</p>
+
+<p>define <script type="math/tex">l_{\pi}(P)</script> as:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{aligned}
+l_{\pi}(P) &= \sup_{\varphi, \psi} \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP \\
+l_{\pi}(P) &= \begin{cases}
+   0 &\text{if } P \in \Pi(\mu, \nu) \\
+   \infty &\text{otherwise}
+\end{cases}
+\end{aligned} %]]></script>
+
+<p>Now, for a neat little trick: we can add this indicator function to the original problem without changing the infimum. Adding this penalty allows us to incorporate couplings beyond the ones in <script type="math/tex">\Pi(\mu, \nu)</script>, relaxing the constraint, without changing the solution of the original problem.</p>
+
+<script type="math/tex; mode=display">\inf_{P \in \Pi(\mu, \nu)} \iint c \: dP = \inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint c \: dP + l_{\pi}(P)</script>
+
+<p>expanding,</p>
+
+<script type="math/tex; mode=display">\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint c \: dP + \sup_{\varphi, \psi} \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP</script>
+
+<p>We can take <script type="math/tex">\varphi, \psi</script> to the front of the equation as the first term is independent of them.</p>
+
+<script type="math/tex; mode=display">\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \sup_{\varphi, \psi} \iint c \: dP + \int \varphi d\mu + \int \psi d\nu - \iint (\varphi \oplus \psi) dP</script>
+
+<p>simplifying,</p>
+
+<script type="math/tex; mode=display">\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \sup_{\varphi, \psi} \iint (c - \varphi \oplus \psi)\: dP + \int \varphi d\mu + \int \psi d\nu</script>
+
+<p>Swapping the infimum and the supremum,</p>
+
+<script type="math/tex; mode=display">\sup_{\varphi, \psi} \inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint (c - \varphi \oplus \psi)\: dP + \int \varphi d\mu + \int \psi d\nu</script>
+
+<p>Now, if <script type="math/tex">% <![CDATA[
+c < \varphi \oplus \psi %]]></script> even at a single point, we can concentrate the mass of P at that point, thus dropping the infimum to <script type="math/tex">-\infty</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\inf_{P \in \mathcal{P}_{+}(\Omega^{2})} \iint (c - \varphi \oplus \psi)\: dP = \begin{cases}
+   0 &\text{if } (c - \varphi \oplus \psi) \geq 0 \\
+   -\infty &\text{otherwise}
+\end{cases} %]]></script>
+
+<p>Thus, this gives us the dual form:</p>
+
+<script type="math/tex; mode=display">\sup_{\varphi + \psi \leq c} \: \int \varphi \: d\mu + \int \psi \: d\nu</script>
+
+<p>Almost there…..</p>
+
+<h3 id="advantages-of-the-dual-form">Advantages of the Dual Form</h3>
+<p>Easier to deal with from a computational perspective as it is easier to store two functions rather than entire coupling.</p>
+
+<p>If we are interested in the measures, it is easier to work with the dual because thee cost remains the same. we can play with the objective rather than the constraint.</p>
+
+<h2 id="1--wasserstein-distance">1- Wasserstein Distance</h2>
+
+<p>If the cost <script type="math/tex">c(x,y) = D(x,y)</script> where <script type="math/tex">D(x,y)</script> is any metric, we get the 1-Wasserstein distance in <script type="math/tex">\mathcal{P}(\Omega)</script></p>
+
+<script type="math/tex; mode=display">W_{1}(\mu, \nu) \triangleq \inf_{P \in \Pi(\mu, \nu)} \iint D(x,y) \: P(dx, dy)</script>
+
+<h3 id="can-we-do-better">Can we do better?</h3>
+
+<p>Do we have to deal with two different functions, <script type="math/tex">\varphi</script> and <script type="math/tex">\psi</script>, can we do away with one of them?</p>
+
+<p>Imagine, we choose a <script type="math/tex">\varphi</script>, what is the best <script type="math/tex">\psi</script>?</p>
+
+<p>We want a <script type="math/tex">\psi</script> such that <script type="math/tex">\int \psi \: d\nu</script> is large but we have to follow the constraint <script type="math/tex">\varphi + \psi \leq D(x,y)</script>.</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{aligned}
+\psi(y) &\leq D(x,y) - \varphi(x) \;\;\; \forall x \\
+\psi(y) &\leq \inf_{x} D(x,y) - \varphi(x)
+\end{aligned} %]]></script>
+
+<p>This is the best possible <script type="math/tex">\psi(x)</script>.</p>
+
+<p>define,</p>
+
+<script type="math/tex; mode=display">\bar{\varphi}(y) \triangleq \inf_{x} D(x,y) - \varphi(x)</script>
+
+<p>Then, we get the semi-dual:</p>
+
+<script type="math/tex; mode=display">W_{1}(\mu, \nu) = \sup_{\varphi} \int \varphi \: d\mu + \int \bar{\varphi} \: d\nu</script>
+
+<p>Instead of searching over all possilbe <script type="math/tex">\varphi</script>, one can search over all possible <script type="math/tex">\varphi</script> such that <script type="math/tex">\varphi</script> is D-concave. (This can be shown to be equivalent by repeatedly appling the c-transform). For 1-Wasserstein distance, <script type="math/tex">\varphi</script> is D-concave <script type="math/tex">\iff \bar{\varphi} = -\varphi</script>, <script type="math/tex">\varphi</script> is 1-Lipschitz.</p>
+
+<p>Finally leading us to the famous form used in machine learning:</p>
+
+<script type="math/tex; mode=display">W_{1}(\mu, \nu) = \sup_{\varphi: \; 1-\text{Lipschitz}} \: \int \varphi \: d\mu - \int \varphi \: d\nu</script>
+
+<p>WGAN finds a function <script type="math/tex">\varphi</script> that maximizes the above integral with respect to the real and generated probability metrics.</p>
+
+<h2 id="references">References</h2>
+<p>[1] Marco Cuturi: [<a href="https://www.youtube.com/watch?v=jgrkhZ8ovVc&amp;ab_channel=virtualmlss2020" target="\_blank">Optimal Transport I, MLSS 2020.</a>]</p>
+
+  </article>
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+    <!-- To add footer, uncomment this and make changes in the _config file for the content.
+<footer>
+Read more: https://html.com/tags/comment-tag/#ixzz6AO49fXqK
+  <div class="wrapper">
+    &copy; Copyright 2020 Saurabh Dash.
+    
+    
+  </div>
+
+</footer>
+-->
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-155736466-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+
+  </body>
+
+</html>
